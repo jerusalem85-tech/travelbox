@@ -21,6 +21,26 @@ import ShowInvoice from './pages/ShowInvoice';
 import Payments from './pages/Payments';
 import Expenses from './pages/Expenses';
 import Settings from './pages/Settings';
+import Reports from './pages/Reports';
+import Quotations from './pages/Quotations';
+import Users from './pages/Users';
+import Notifications from './pages/Notifications';
+import Hotels from './pages/Hotels';
+import Packages from './pages/Packages';
+import Insurance from './pages/Insurance';
+import Contracts from './pages/Contracts';
+import Commissions from './pages/Commissions';
+import ActivityLog from './pages/ActivityLog';
+import Currencies from './pages/Currencies';
+import Communications from './pages/Communications';
+import Visas from './pages/Visas';
+import Documents from './pages/Documents';
+import Tasks from './pages/Tasks';
+import CalendarView from './pages/CalendarView';
+import PriceLists from './pages/PriceLists';
+import Checklist from './pages/Checklist';
+import Inventory from './pages/Inventory';
+import Leads from './pages/Leads';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -54,7 +74,27 @@ function App() {
             <Route path="invoices/:id" element={<ShowInvoice />} />
             <Route path="payments" element={<Payments />} />
             <Route path="expenses" element={<Expenses />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="quotations" element={<Quotations />} />
+            <Route path="users" element={<Users />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="hotels" element={<Hotels />} />
+            <Route path="packages" element={<Packages />} />
+            <Route path="insurance" element={<Insurance />} />
+            <Route path="contracts" element={<Contracts />} />
+            <Route path="commissions" element={<Commissions />} />
+            <Route path="activity-log" element={<ActivityLog />} />
+            <Route path="currencies" element={<Currencies />} />
+            <Route path="communications" element={<Communications />} />
+            <Route path="visas" element={<Visas />} />
+            <Route path="documents" element={<Documents />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="calendar" element={<CalendarView />} />
+            <Route path="price-lists" element={<PriceLists />} />
+            <Route path="checklist" element={<Checklist />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="leads" element={<Leads />} />
           </Route>
         </Routes>
       </AuthProvider>
