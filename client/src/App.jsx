@@ -68,6 +68,9 @@ import PriceCalculator from './pages/PriceCalculator';
 import Surveys from './pages/Surveys';
 import KnowledgeBase from './pages/KnowledgeBase';
 import Complaints from './pages/Complaints';
+import GiftVouchers from './pages/GiftVouchers';
+import Campaigns from './pages/Campaigns';
+import LoyaltyPoints from './pages/LoyaltyPoints';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -132,6 +135,9 @@ function App() {
             <Route path="follow-ups" element={<FollowUps />} />
             <Route path="surveys" element={<Surveys />} />
             <Route path="complaints" element={<Complaints />} />
+            <Route path="gift-vouchers" element={<GiftVouchers />} />
+            <Route path="campaigns" element={<Campaigns />} />
+            <Route path="loyalty-points" element={<LoyaltyPoints />} />
             <Route path="price-calculator" element={<PriceCalculator />} />
             <Route path="knowledge" element={<KnowledgeBase />} />
             <Route path="guides" element={<Guides />} />

@@ -37,10 +37,7 @@ export default function Dashboard() {
   const [trashCount, setTrashCount] = useState(0);
 
   useEffect(() => {
-    api.get('/trash').then(res => {
-      const data = res.data.rows || res.data.data || res.data || [];
-      setTrashCount(Array.isArray(data) ? data.length : (res.data.total || 0));
-    }).catch(() => {});
+    api.get('/trash/count').then(res => setTrashCount(res.data.count || 0)).catch(() => {});
   }, []);
 
   useEffect(() => {
