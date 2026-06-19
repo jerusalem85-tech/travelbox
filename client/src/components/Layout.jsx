@@ -164,6 +164,9 @@ export default function Layout() {
           <NavLink to="/communications" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-chat-dots"></i> التواصل
           </NavLink>
+          <NavLink to="/login-log" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-door-open"></i> سجل الدخول
+          </NavLink>
           <NavLink to="/tasks" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-check2-square"></i> المهام
           </NavLink>
@@ -173,8 +176,17 @@ export default function Layout() {
           <NavLink to="/referrals" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-share"></i> الإحالات
           </NavLink>
+          <NavLink to="/trash" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-trash"></i> سلة المهملات
+          </NavLink>
           <NavLink to="/settings" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-gear"></i> الإعدادات
+          </NavLink>
+          <NavLink to="/templates" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-envelope-paper"></i> القوالب
+          </NavLink>
+          <NavLink to="/advanced-settings" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-sliders"></i> الإعدادات المتقدمة
           </NavLink>
         </nav>
         <div className="sidebar-footer">

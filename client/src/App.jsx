@@ -53,6 +53,10 @@ import ServicesCatalog from './pages/ServicesCatalog';
 import RestaurantBookings from './pages/RestaurantBookings';
 import Properties from './pages/Properties';
 import Referrals from './pages/Referrals';
+import Trash from './pages/Trash';
+import LoginLog from './pages/LoginLog';
+import Templates from './pages/Templates';
+import AdvancedSettings from './pages/AdvancedSettings';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -119,6 +123,10 @@ function App() {
             <Route path="restaurant-bookings" element={<RestaurantBookings />} />
             <Route path="properties" element={<Properties />} />
             <Route path="referrals" element={<Referrals />} />
+            <Route path="trash" element={<Trash />} />
+            <Route path="login-log" element={<LoginLog />} />
+            <Route path="templates" element={<Templates />} />
+            <Route path="advanced-settings" element={<AdvancedSettings />} />
           </Route>
         </Routes>
       </AuthProvider>

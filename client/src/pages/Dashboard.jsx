@@ -34,6 +34,14 @@ export default function Dashboard() {
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   });
+  const [trashCount, setTrashCount] = useState(0);
+
+  useEffect(() => {
+    api.get('/trash').then(res => {
+      const data = res.data.rows || res.data.data || res.data || [];
+      setTrashCount(Array.isArray(data) ? data.length : (res.data.total || 0));
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     api.get('/stats').then(res => {
@@ -160,6 +168,21 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-6 col-md-4 col-lg-2">
+          <Link to="/trash" className="text-decoration-none">
+            <div className="card stat-card bg-dark bg-opacity-10">
+              <div className="card-body">
+                <div className="d-flex align-items-center gap-2">
+                  <div className="icon bg-dark text-white"><i className="bi bi-trash"></i></div>
+                  <div>
+                    <h5 className="mb-0">{trashCount}</h5>
+                    <small className="text-secondary">سلة المهملات</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
 
