@@ -2,12 +2,79 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 
+const monthNames = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+
+function getMonthOptions() {
+  const options = [];
+  const now = new Date();
+  for (let i = 0; i < 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const val = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    options.push({ value: val, label: `${monthNames[d.getMonth()]} ${d.getFullYear()}` });
+  }
+  return options;
+}
+
+function statusLabel(s) {
+  const map = { confirmed: 'مؤكد', cancelled: 'ملغي', completed: 'منتهي', pending: 'معلق' };
+  return map[s] || s;
+}
+
+function statusColor(s) {
+  const map = { confirmed: 'success', cancelled: 'danger', completed: 'secondary', pending: 'warning' };
+  return map[s] || 'secondary';
+}
+
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [topCustomers, setTopCustomers] = useState([]);
+  const [statusBreakdown, setStatusBreakdown] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  });
 
   useEffect(() => {
-    api.get('/stats').then(res => setStats(res.data));
+    api.get('/stats').then(res => {
+      setStats(res.data);
+      const recent = res.data.recentBookings || [];
+      const statusCounts = {};
+      recent.forEach(b => {
+        const s = b.status || 'pending';
+        statusCounts[s] = (statusCounts[s] || 0) + 1;
+      });
+      if (Object.keys(statusCounts).length > 0) {
+        setStatusBreakdown(Object.entries(statusCounts).map(([k, v]) => ({ status: k, count: v })));
+      }
+    });
   }, []);
+
+  useEffect(() => {
+    api.get('/reports', { params: { type: 'monthly', months: 6 } })
+      .then(res => setMonthlyData(res.data.monthly || res.data.rows || []))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    api.get('/stats/top-customers')
+      .then(res => setTopCustomers(res.data.rows || res.data || []))
+      .catch(() => {
+        if (stats?.recentBookings) {
+          const map = {};
+          stats.recentBookings.forEach(b => {
+            const name = b.customer_name || 'مجهول';
+            map[name] = (map[name] || 0) + 1;
+          });
+          setTopCustomers(Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k, v]) => ({ full_name: k, count: v })));
+        }
+      });
+  }, [stats]);
+
+  const maxRevenue = Math.max(...monthlyData.map(m => m.revenue || 0), 1);
+
+  const selectedMonthData = monthlyData.find(m => m.month === selectedMonth);
+  const selectedMonthLabel = getMonthOptions().find(o => o.value === selectedMonth)?.label || selectedMonth;
 
   if (!stats) return <div className="text-center py-5"><div className="spinner-border text-primary"></div></div>;
 
@@ -97,6 +164,102 @@ export default function Dashboard() {
       </div>
 
       <div className="row g-3 mb-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h6 className="card-title mb-3"><i className="bi bi-graph-up me-2"></i>الإيرادات الشهرية</h6>
+              {monthlyData.length === 0 ? (
+                <div className="text-center text-muted py-3">لا توجد بيانات</div>
+              ) : (
+                <div className="d-flex flex-column gap-3">
+                  {monthlyData.map((m, i) => {
+                    const revPct = maxRevenue > 0 ? ((m.revenue || 0) / maxRevenue) * 100 : 0;
+                    const expPct = maxRevenue > 0 ? ((m.expenses || 0) / maxRevenue) * 100 : 0;
+                    const monthLabel = monthNames[new Date(m.month + '-01').getMonth()];
+                    return (
+                      <div key={i}>
+                        <div className="d-flex justify-content-between small mb-1">
+                          <span className="fw-semibold">{monthLabel}</span>
+                          <span className="text-success fw-bold">{m.revenue?.toLocaleString()}</span>
+                        </div>
+                        <div className="progress mb-1" style={{ height: '12px', borderRadius: '6px' }}>
+                          <div className="progress-bar bg-success" style={{ width: `${revPct}%` }} title={`إيرادات: ${m.revenue?.toLocaleString()}`}></div>
+                          <div className="progress-bar bg-danger" style={{ width: `${Math.min(expPct, 100 - revPct)}%` }} title={`مصاريف: ${m.expenses?.toLocaleString() || 0}`}></div>
+                        </div>
+                        <div className="d-flex justify-content-between small text-muted">
+                          <span>مصاريف: {m.expenses?.toLocaleString() || 0}</span>
+                          <span className={m.profit >= 0 ? 'text-success' : 'text-danger'}>صافي: {m.profit?.toLocaleString() || 0}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-3">
+          <div className="card h-100">
+            <div className="card-body d-flex flex-column">
+              <h6 className="card-title mb-3"><i className="bi bi-pie-chart me-2"></i>حالة الحجوزات</h6>
+              {statusBreakdown.length === 0 ? (
+                <div className="text-center text-muted py-3">لا توجد بيانات</div>
+              ) : (
+                <>
+                  <div className="d-flex gap-1 mb-3" style={{ height: '24px' }}>
+                    {statusBreakdown.map((s, i) => {
+                      const total = statusBreakdown.reduce((a, b) => a + b.count, 0);
+                      const pct = (s.count / total) * 100;
+                      return <div key={i} className={`bg-${statusColor(s.status)}`} style={{ width: `${pct}%`, borderRadius: '4px' }} title={`${statusLabel(s.status)}: ${s.count}`}></div>;
+                    })}
+                  </div>
+                  {statusBreakdown.map((s, i) => (
+                    <div key={i} className="d-flex justify-content-between small mb-1">
+                      <span><span className={`badge bg-${statusColor(s.status)} me-1`}>{statusLabel(s.status)}</span></span>
+                      <span className="fw-bold">{s.count}</span>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-3">
+          <div className="card h-100">
+            <div className="card-body">
+              <h6 className="card-title mb-3"><i className="bi bi-trophy me-2"></i>أفضل العملاء</h6>
+              {topCustomers.length === 0 ? (
+                <div className="text-center text-muted py-3">لا توجد بيانات</div>
+              ) : (
+                <div className="table-responsive">
+                  <table className="table table-sm table-borderless mb-0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>العميل</th>
+                        <th className="text-center">الحجوزات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topCustomers.slice(0, 5).map((c, i) => (
+                        <tr key={i}>
+                          <td className="text-muted">{i + 1}</td>
+                          <td className="fw-semibold">{c.full_name || c.customer_name || 'مجهول'}</td>
+                          <td className="text-center"><span className="badge bg-primary rounded-pill">{c.count}</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-3 mb-4">
         <div className="col-md-8">
           <div className="card h-100">
             <div className="card-body">
@@ -129,10 +292,26 @@ export default function Dashboard() {
         </div>
         <div className="col-md-4">
           <div className="card h-100">
-            <div className="card-body d-flex flex-column justify-content-center align-items-center">
-              <h6 className="card-title mb-3">حجوزات اليوم</h6>
-              <div className="display-4 fw-bold text-primary mb-2">{stats.todayBookings}</div>
-              <small className="text-secondary">حجز جديد اليوم</small>
+            <div className="card-body">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h6 className="mb-0"><i className="bi bi-calendar me-2"></i>الشهر الحالي</h6>
+                <select className="form-select form-select-sm w-auto" value={selectedMonth} onChange={e => setSelectedMonth(e.target.value)}>
+                  {getMonthOptions().map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </div>
+              {selectedMonthData ? (
+                <div className="text-center">
+                  <div className="display-6 fw-bold text-primary mb-1">{selectedMonthData.bookings || 0}</div>
+                  <small className="text-muted d-block mb-3">حجوزات في {selectedMonthLabel}</small>
+                  <div className="d-flex justify-content-between small px-3">
+                    <div><span className="text-success fw-bold">{selectedMonthData.revenue?.toLocaleString()}</span><br /><small>إيرادات</small></div>
+                    <div><span className="text-danger fw-bold">{selectedMonthData.expenses?.toLocaleString()}</span><br /><small>مصاريف</small></div>
+                    <div><span className={`fw-bold ${(selectedMonthData.profit || 0) >= 0 ? 'text-success' : 'text-danger'}`}>{selectedMonthData.profit?.toLocaleString()}</span><br /><small>صافي</small></div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center text-muted py-3">لا توجد بيانات لهذا الشهر</div>
+              )}
             </div>
           </div>
         </div>
@@ -164,8 +343,8 @@ export default function Dashboard() {
                     <td>{b.travel_date}</td>
                     <td>{b.from_destination} → {b.to_destination}</td>
                     <td>
-                      <span className={`badge bg-${b.status === 'confirmed' ? 'success' : b.status === 'cancelled' ? 'danger' : b.status === 'completed' ? 'secondary' : 'warning'}`}>
-                        {b.status === 'confirmed' ? 'مؤكد' : b.status === 'cancelled' ? 'ملغي' : b.status === 'completed' ? 'منتهي' : 'معلق'}
+                      <span className={`badge bg-${statusColor(b.status)}`}>
+                        {statusLabel(b.status)}
                       </span>
                     </td>
                     <td>{b.total_amount?.toLocaleString()}</td>

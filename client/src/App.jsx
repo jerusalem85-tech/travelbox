@@ -41,6 +41,12 @@ import PriceLists from './pages/PriceLists';
 import Checklist from './pages/Checklist';
 import Inventory from './pages/Inventory';
 import Leads from './pages/Leads';
+import Employees from './pages/Employees';
+import Vehicles from './pages/Vehicles';
+import Guides from './pages/Guides';
+import Discounts from './pages/Discounts';
+import TaxRates from './pages/TaxRates';
+import Reviews from './pages/Reviews';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -95,6 +101,12 @@ function App() {
             <Route path="checklist" element={<Checklist />} />
             <Route path="inventory" element={<Inventory />} />
             <Route path="leads" element={<Leads />} />
+            <Route path="employees" element={<Employees />} />
+            <Route path="vehicles" element={<Vehicles />} />
+            <Route path="guides" element={<Guides />} />
+            <Route path="discounts" element={<Discounts />} />
+            <Route path="tax-rates" element={<TaxRates />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
         </Routes>
       </AuthProvider>

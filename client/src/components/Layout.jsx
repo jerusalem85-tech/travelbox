@@ -86,6 +86,12 @@ export default function Layout() {
           <NavLink to="/calendar" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-calendar3"></i> التقويم
           </NavLink>
+          <NavLink to="/vehicles" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-truck"></i> المركبات
+          </NavLink>
+          <NavLink to="/guides" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-person-badge"></i> المرشدون
+          </NavLink>
           
           <div className="nav-section">المالية</div>
           <NavLink to="/invoices" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
@@ -103,6 +109,12 @@ export default function Layout() {
           <NavLink to="/reports" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-graph-up"></i> التقارير
           </NavLink>
+          <NavLink to="/discounts" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-percent"></i> الخصومات
+          </NavLink>
+          <NavLink to="/tax-rates" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-calculator"></i> الضرائب
+          </NavLink>
 
           <div className="nav-section">العقود والعمولات</div>
           <NavLink to="/contracts" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
@@ -113,6 +125,14 @@ export default function Layout() {
           </NavLink>
           <NavLink to="/activity-log" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-clock-history"></i> سجل النشاط
+          </NavLink>
+          <NavLink to="/reviews" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-star"></i> التقييمات
+          </NavLink>
+
+          <div className="nav-section">الموارد البشرية</div>
+          <NavLink to="/employees" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-person-workspace"></i> الموظفون
           </NavLink>
 
           <div className="nav-section">الإدارة</div>
