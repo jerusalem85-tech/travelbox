@@ -59,6 +59,9 @@ import LoginLog from './pages/LoginLog';
 import Templates from './pages/Templates';
 import AdvancedSettings from './pages/AdvancedSettings';
 import Installments from './pages/Installments';
+import Airports from './pages/Airports';
+import Destinations from './pages/Destinations';
+import FlightSchedules from './pages/FlightSchedules';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -116,6 +119,9 @@ function App() {
             <Route path="leads" element={<Leads />} />
             <Route path="employees" element={<Employees />} />
             <Route path="vehicles" element={<Vehicles />} />
+            <Route path="airports" element={<Airports />} />
+            <Route path="destinations" element={<Destinations />} />
+            <Route path="flight-schedules" element={<FlightSchedules />} />
             <Route path="guides" element={<Guides />} />
             <Route path="discounts" element={<Discounts />} />
             <Route path="tax-rates" element={<TaxRates />} />
