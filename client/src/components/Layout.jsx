@@ -2,6 +2,7 @@ import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import HelpWidget from './HelpWidget';
 
 const breadcrumbLabels = {
   '': 'الرئيسية', bookings: 'الحجوزات', customers: 'العملاء', suppliers: 'الموردين',
@@ -16,7 +17,8 @@ const breadcrumbLabels = {
   reviews: 'التقييمات', brokers: 'السماسرة', transfers: 'المشاوير',
   'services-catalog': 'خدمات إضافية', 'restaurant-bookings': 'حجوزات مطاعم',
   airports: 'المطارات', destinations: 'الوجهات', 'flight-schedules': 'جداول الرحلات',
-  'customer-timeline': 'سجل العميل', 'follow-ups': 'متابعة', 'price-calculator': 'حاسبة الأسعار',
+  'customer-timeline': 'سجل العميل', 'follow-ups': 'متابعة', surveys: 'الرضا',
+  knowledge: 'قاعدة المعرفة', complaints: 'الشكاوى', 'price-calculator': 'حاسبة الأسعار',
   properties: 'العقارات', referrals: 'الإحالات', trash: 'سلة المهملات',
   'login-log': 'سجل الدخول', templates: 'القوالب', 'advanced-settings': 'الإعدادات المتقدمة',
   installments: 'خطط التقسيط', create: 'جديد', edit: 'تعديل',
@@ -125,8 +127,11 @@ export default function Layout() {
     { to: '/destinations', icon: 'globe', label: 'الوجهات' },
     { to: '/customer-timeline', icon: 'clock-history', label: 'سجل العميل' },
     { to: '/follow-ups', icon: 'bell', label: 'متابعة' },
+    { to: '/surveys', icon: 'emoji-smile', label: 'الرضا' },
+    { to: '/complaints', icon: 'exclamation-triangle', label: 'الشكاوى' },
     { to: '/flight-schedules', icon: 'calendar-week', label: 'جداول الرحلات' },
     { to: '/price-calculator', icon: 'calculator', label: 'حاسبة الأسعار' },
+    { to: '/knowledge', icon: 'book', label: 'قاعدة المعرفة' },
     { to: '/guides', icon: 'person-badge', label: 'المرشدون' },
     { to: '/transfers', icon: 'geo-alt', label: 'المشاوير' },
     { to: '/restaurant-bookings', icon: 'cup-hot', label: 'حجوزات مطاعم' },
@@ -233,6 +238,7 @@ export default function Layout() {
         <div className="p-3">
           <Outlet />
         </div>
+        <HelpWidget />
       </div>
     </>
   );

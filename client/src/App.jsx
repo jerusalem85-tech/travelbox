@@ -65,6 +65,9 @@ import FlightSchedules from './pages/FlightSchedules';
 import CustomerTimeline from './pages/CustomerTimeline';
 import FollowUps from './pages/FollowUps';
 import PriceCalculator from './pages/PriceCalculator';
+import Surveys from './pages/Surveys';
+import KnowledgeBase from './pages/KnowledgeBase';
+import Complaints from './pages/Complaints';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -127,7 +130,10 @@ function App() {
             <Route path="flight-schedules" element={<FlightSchedules />} />
             <Route path="customer-timeline" element={<CustomerTimeline />} />
             <Route path="follow-ups" element={<FollowUps />} />
+            <Route path="surveys" element={<Surveys />} />
+            <Route path="complaints" element={<Complaints />} />
             <Route path="price-calculator" element={<PriceCalculator />} />
+            <Route path="knowledge" element={<KnowledgeBase />} />
             <Route path="guides" element={<Guides />} />
             <Route path="discounts" element={<Discounts />} />
             <Route path="tax-rates" element={<TaxRates />} />
