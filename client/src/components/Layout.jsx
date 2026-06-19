@@ -23,6 +23,7 @@ const breadcrumbLabels = {
   compare: 'مقارنة', 'contract-templates': 'قوالب العقود', 'signed-contracts': 'العقود الإلكترونية',
   'exec-dashboard': 'لوحة التنفيذية', 'price-calculator': 'حاسبة الأسعار',
   properties: 'العقارات', referrals: 'الإحالات', trash: 'سلة المهملات',
+  appointments: 'المواعيد', approvals: 'الموافقات', 'phone-directory': 'دليل الهاتف',
   'login-log': 'سجل الدخول', templates: 'القوالب', 'advanced-settings': 'الإعدادات المتقدمة',
   installments: 'خطط التقسيط', create: 'جديد', edit: 'تعديل',
 };
@@ -135,6 +136,9 @@ export default function Layout() {
     { to: '/gift-vouchers', icon: 'gift', label: 'قسائم هدايا' },
     { to: '/campaigns', icon: 'megaphone', label: 'الحملات' },
     { to: '/gallery', icon: 'images', label: 'المعرض' },
+    { to: '/appointments', icon: 'calendar-check', label: 'المواعيد' },
+    { to: '/approvals', icon: 'check-circle', label: 'الموافقات' },
+    { to: '/phone-directory', icon: 'telephone', label: 'دليل الهاتف' },
     { to: '/compare', icon: 'arrows-left-right', label: 'مقارنة' },
     { to: '/contract-templates', icon: 'file-text', label: 'قوالب العقود' },
     { to: '/signed-contracts', icon: 'pen', label: 'العقود الإلكترونية' },

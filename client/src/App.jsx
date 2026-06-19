@@ -76,6 +76,9 @@ import Compare from './pages/Compare';
 import ContractTemplates from './pages/ContractTemplates';
 import SignedContracts from './pages/SignedContracts';
 import ExecutiveDashboard from './pages/ExecutiveDashboard';
+import Appointments from './pages/Appointments';
+import Approvals from './pages/Approvals';
+import PhoneDirectory from './pages/PhoneDirectory';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -165,6 +168,9 @@ function App() {
             <Route path="templates" element={<Templates />} />
             <Route path="advanced-settings" element={<AdvancedSettings />} />
             <Route path="installments" element={<Installments />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="approvals" element={<Approvals />} />
+            <Route path="phone-directory" element={<PhoneDirectory />} />
           </Route>
         </Routes>
         </ToastProvider>
