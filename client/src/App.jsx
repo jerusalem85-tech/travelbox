@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -57,6 +58,7 @@ import Trash from './pages/Trash';
 import LoginLog from './pages/LoginLog';
 import Templates from './pages/Templates';
 import AdvancedSettings from './pages/AdvancedSettings';
+import Installments from './pages/Installments';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -69,6 +71,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ToastProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
@@ -127,8 +130,10 @@ function App() {
             <Route path="login-log" element={<LoginLog />} />
             <Route path="templates" element={<Templates />} />
             <Route path="advanced-settings" element={<AdvancedSettings />} />
+            <Route path="installments" element={<Installments />} />
           </Route>
         </Routes>
+        </ToastProvider>
       </AuthProvider>
     </BrowserRouter>
   );
