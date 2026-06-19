@@ -47,6 +47,12 @@ import Guides from './pages/Guides';
 import Discounts from './pages/Discounts';
 import TaxRates from './pages/TaxRates';
 import Reviews from './pages/Reviews';
+import Brokers from './pages/Brokers';
+import Transfers from './pages/Transfers';
+import ServicesCatalog from './pages/ServicesCatalog';
+import RestaurantBookings from './pages/RestaurantBookings';
+import Properties from './pages/Properties';
+import Referrals from './pages/Referrals';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -107,6 +113,12 @@ function App() {
             <Route path="discounts" element={<Discounts />} />
             <Route path="tax-rates" element={<TaxRates />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="brokers" element={<Brokers />} />
+            <Route path="transfers" element={<Transfers />} />
+            <Route path="services-catalog" element={<ServicesCatalog />} />
+            <Route path="restaurant-bookings" element={<RestaurantBookings />} />
+            <Route path="properties" element={<Properties />} />
+            <Route path="referrals" element={<Referrals />} />
           </Route>
         </Routes>
       </AuthProvider>

@@ -92,6 +92,18 @@ export default function Layout() {
           <NavLink to="/guides" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-person-badge"></i> المرشدون
           </NavLink>
+          <NavLink to="/transfers" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-geo-alt"></i> المشاوير
+          </NavLink>
+          <NavLink to="/restaurant-bookings" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-cup-hot"></i> حجوزات مطاعم
+          </NavLink>
+          <NavLink to="/properties" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-house-door"></i> العقارات
+          </NavLink>
+          <NavLink to="/services-catalog" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-card-list"></i> خدمات إضافية
+          </NavLink>
           
           <div className="nav-section">المالية</div>
           <NavLink to="/invoices" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
@@ -114,6 +126,9 @@ export default function Layout() {
           </NavLink>
           <NavLink to="/tax-rates" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-calculator"></i> الضرائب
+          </NavLink>
+          <NavLink to="/brokers" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-handshake"></i> السماسرة
           </NavLink>
 
           <div className="nav-section">العقود والعمولات</div>
@@ -154,6 +169,9 @@ export default function Layout() {
           </NavLink>
           <NavLink to="/inventory" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-boxes"></i> المخزون
+          </NavLink>
+          <NavLink to="/referrals" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
+            <i className="bi bi-share"></i> الإحالات
           </NavLink>
           <NavLink to="/settings" className="nav-link" onClick={() => document.getElementById('sidebar').classList.remove('show')}>
             <i className="bi bi-gear"></i> الإعدادات
