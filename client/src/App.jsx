@@ -71,6 +71,11 @@ import Complaints from './pages/Complaints';
 import GiftVouchers from './pages/GiftVouchers';
 import Campaigns from './pages/Campaigns';
 import LoyaltyPoints from './pages/LoyaltyPoints';
+import Gallery from './pages/Gallery';
+import Compare from './pages/Compare';
+import ContractTemplates from './pages/ContractTemplates';
+import SignedContracts from './pages/SignedContracts';
+import ExecutiveDashboard from './pages/ExecutiveDashboard';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -138,6 +143,11 @@ function App() {
             <Route path="gift-vouchers" element={<GiftVouchers />} />
             <Route path="campaigns" element={<Campaigns />} />
             <Route path="loyalty-points" element={<LoyaltyPoints />} />
+            <Route path="gallery" element={<Gallery />} />
+            <Route path="compare" element={<Compare />} />
+            <Route path="contract-templates" element={<ContractTemplates />} />
+            <Route path="signed-contracts" element={<SignedContracts />} />
+            <Route path="exec-dashboard" element={<ExecutiveDashboard />} />
             <Route path="price-calculator" element={<PriceCalculator />} />
             <Route path="knowledge" element={<KnowledgeBase />} />
             <Route path="guides" element={<Guides />} />
